@@ -4,9 +4,11 @@
   "license": "(MIT AND CC-BY-4.0)",
   "description": "CrossCode Polish translation",
   "homepage": "https://github.com/lexisother/CrossCode-PL",
+  "postload": "src/postload.js",
   "dependencies": {
     "crosscode": "~1.4.2",
     "localize-me": "^1.0.0",
     "ultimate-localized-ui": "^1.0.0"
-  }
+  },
+  "assets": ["media/font/pl_PL/flag.png"]
 }
