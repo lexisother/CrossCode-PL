@@ -1,0 +1,25 @@
+##### LOCALIZE ME #####
+/packs-mapping.json
+/packs/
+
+##### LOCALIZE ME TOOLS #####
+/config.json
+/string_cache.json
+# Backup files, automatically written by LMT
+*~
+
+##### PYTHON SCRIPTS #####
+__pycache__/
+
+##### TRANSLATION PACK DOWNLOADER AND COMPILER #####
+/.trpack-compiler/
+# UNIX binary
+/crosslocale
+# Windows binary
+/crosslocale.exe
+
+##### DISTRIBUTABLES #####
+/dist/
+
+##### GITHUB ACTIONS #####
+/crosslocale.src/
