@@ -5,6 +5,7 @@
   "description": "CrossCode Polish translation",
   "homepage": "https://github.com/lexisother/CrossCode-PL",
   "postload": "src/postload.js",
+  "prestart": "src/prestart.js",
   "dependencies": {
     "crosscode": "~1.4.2",
     "localize-me": "^1.0.0",

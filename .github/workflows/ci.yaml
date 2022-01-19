@@ -1,11 +1,7 @@
 # Taken from <https://github.com/tralph3/CrossCode-Esp/blob/master/.github/workflows/ci.yaml>
 
 name: Manual Build
-on:
-  push:
-    branches:
-      - master
-  workflow_dispatch:
+on: [workflow_dispatch]
 
 env:
   CARGO_TERM_COLOR: always
