@@ -1,0 +1,6 @@
+{
+  "private": true,
+  "devDependencies": {
+    "ultimate-crosscode-typedefs": "dmitmel/ultimate-crosscode-typedefs"
+  }
+}
