@@ -1,7 +1,5 @@
 // credit where credit is due, of course: <https://github.com/CCDirectLink/crosscode-ru/blob/cce868439f014f2a329de6a358c1ca8faba62e1e/src/ru-social-button.ts>
 
-// TODO: Translate the text
-// TODO: Re-add the CrossCode developer Twitter links
 // TODO: Leverage NW.js to open the links in an external browser, see line 77 of /game/page/game-base.js:w
 
 ig.module('cc-pl.social')
@@ -18,6 +16,19 @@ ig.module('cc-pl.social')
         url: 'https://discord.gg/MHZ7vKzcfc',
         description: 'Nasz Serwer Discord',
       },
+    ];
+
+    const originals = [
+      { twitter: 'RadicalFishGame', what: 'Official Account' },
+      { twitter: 'lachsen', what: 'Creative Direction, Programming' },
+      { twitter: 'RadicalRegiden', what: 'Level Design, Programming' },
+      { twitter: 'GFluegel', what: 'Quest Design' },
+      { twitter: 'interovgm', what: 'Music' },
+      { twitter: 'teflorator', what: 'Sound Design' },
+      { twitter: 'ThomasFroese', what: 'Pixel Art (Effects & Animations)' },
+      { twitter: 'ma_jrv', what: 'Pixel Art (Environment)' },
+      { twitter: 'VintalValentin', what: 'Pixel Art (Environment)' },
+      { twitter: 'Indofrece', what: 'Concept Art' },
     ];
 
     function showSocialDialog() {
@@ -51,6 +62,23 @@ ig.module('cc-pl.social')
         plList.append(li);
       }
       scrollContainer.append(plList);
+
+      let developerHeader = document.createElement('h3');
+      developerHeader.textContent = 'Follow us on Twitter!';
+      scrollContainer.appendChild(developerHeader);
+
+      let developerList = document.createElement('ul');
+      for (let { twitter, what } of originals) {
+        let a = document.createElement('a');
+        a.href = `https://twitter.com/${twitter}`;
+        a.target = '_blank';
+        a.textContent = `@${twitter}`;
+
+        let li = document.createElement('li');
+        li.append(a, ` - ${what}`);
+        developerList.append(li);
+      }
+      scrollContainer.append(developerList);
 
       let closeBtnContainer = document.createElement('div');
       let closeBtn = document.createElement('input');
