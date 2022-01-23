@@ -22,6 +22,10 @@ jobs:
           repository: dmitmel/crosscode-localization-engine
           path: crosslocale.src
 
+      - name: Setup Node
+        uses: actions/setup-node@v2
+        run: npm install
+
       - name: rust-toolchain file hack to avoid downloading the toolchain twice
         run: |
           ln -srfT crosslocale.src/rust-toolchain rust-toolchain
