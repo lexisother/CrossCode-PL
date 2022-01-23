@@ -1,7 +1,5 @@
 // credit where credit is due, of course: <https://github.com/CCDirectLink/crosscode-ru/blob/cce868439f014f2a329de6a358c1ca8faba62e1e/src/ru-social-button.ts>
 
-// TODO: Leverage NW.js to open the links in an external browser, see line 77 of /game/page/game-base.js:w
-
 ig.module('cc-pl.social')
   .requires('game.feature.gui.screen.title-screen', 'dom.ready', 'localize-me.final-locale.ready')
   .defines(() => {
@@ -31,6 +29,15 @@ ig.module('cc-pl.social')
       { twitter: 'Indofrece', what: 'Concept Art' },
     ];
 
+    function makeClickable(a: HTMLAnchorElement): void {
+      if (ig.platform === ig.PLATFORM_TYPES.DESKTOP) {
+        a.addEventListener('click', function (this, event) {
+          event.preventDefault();
+          nw.Shell.openExternal(this.href);
+        });
+      }
+    }
+
     function showSocialDialog() {
       let container = document.createElement('div');
       container.classList.add('gameOverlayBox', 'twitterMessage');
@@ -56,6 +63,7 @@ ig.module('cc-pl.social')
         a.href = url;
         a.target = '_blank';
         a.textContent = url;
+        makeClickable(a);
 
         let li = document.createElement('li');
         li.append(a, ` - ${description}`);
@@ -73,6 +81,7 @@ ig.module('cc-pl.social')
         a.href = `https://twitter.com/${twitter}`;
         a.target = '_blank';
         a.textContent = `@${twitter}`;
+        makeClickable(a);
 
         let li = document.createElement('li');
         li.append(a, ` - ${what}`);
