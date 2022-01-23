@@ -14,11 +14,11 @@ ig.module('cc-pl.social')
     const links = [
       {
         url: 'https://github.com/lexisother/CrossCode-PL',
-        description: 'Our GitHub Repository',
+        description: 'Nasze repozytorium Github',
       },
       {
         url: 'https://discord.gg/MHZ7vKzcfc',
-        description: 'Our Discord Server',
+        description: 'Nasz Serwer Discord',
       },
     ];
 
@@ -38,7 +38,7 @@ ig.module('cc-pl.social')
       scrollContainer.style.overflow = 'auto';
 
       let plHeader = document.createElement('h3');
-      plHeader.textContext = 'CrossCode-PL / Polish Translation for CrossCode';
+      plHeader.textContext = 'CrossCode-PL / Polskie Tłumaczenie CrossCode';
       scrollContainer.appendChild(plHeader);
 
       let plList = document.createElement('ul');
