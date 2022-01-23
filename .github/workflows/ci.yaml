@@ -24,6 +24,7 @@ jobs:
 
       - name: Setup Node
         uses: actions/setup-node@v2
+      - name: Install Node dependencies
         run: npm install
 
       - name: rust-toolchain file hack to avoid downloading the toolchain twice
