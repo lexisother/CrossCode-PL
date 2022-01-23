@@ -1,5 +1,3 @@
-/// <reference path="../global.d.ts" />
-
 ig.module('cc-pl.version')
   .requires(
     'game.feature.gui.base.text',
@@ -13,7 +11,7 @@ ig.module('cc-pl.version')
       init(...args) {
         this.parent(...args);
 
-        let version = modloader.loadedMods.get('CrossCode-PL').version;
+        let version = modloader.loadedMods.get('CrossCode-PL')!.version!.toString();
         let versionGui = new sc.TextGui(`PL v${version}`, {
           font: sc.fontsystem.tinyFont,
         });

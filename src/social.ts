@@ -1,5 +1,3 @@
-/// <reference path="../global.d.ts" />
-
 // credit where credit is due, of course: <https://github.com/CCDirectLink/crosscode-ru/blob/cce868439f014f2a329de6a358c1ca8faba62e1e/src/ru-social-button.ts>
 
 // TODO: Translate the text
@@ -38,7 +36,7 @@ ig.module('cc-pl.social')
       scrollContainer.style.overflow = 'auto';
 
       let plHeader = document.createElement('h3');
-      plHeader.textContext = 'CrossCode-PL / Polskie Tłumaczenie CrossCode';
+      plHeader.textContent = 'CrossCode-PL / Polskie Tłumaczenie CrossCode';
       scrollContainer.appendChild(plHeader);
 
       let plList = document.createElement('ul');

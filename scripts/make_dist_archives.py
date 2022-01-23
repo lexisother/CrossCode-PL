@@ -22,7 +22,7 @@ MOD_FILES_PATTERNS = [
   "LICENSE*",
   "README*",
   "packs-mapping.json",
-  "src/**/*.js",
+  "out-dist/**/*.js",
   "packs/**/*.json",
   "assets/**/*.png",
 ]
@@ -50,6 +50,15 @@ def main() -> None:
     f"https://github.com/CCDirectLink/crosscode-ru/releases/download/v{ULTIMATE_UI_DOWNLOAD_VERSION[0]}/ultimate-localized-ui_v{ULTIMATE_UI_DOWNLOAD_VERSION[1]}.tgz",
     filename=f"ultimate-localized-ui-{ULTIMATE_UI_DOWNLOAD_VERSION[1]}.tgz",
   )
+
+
+  print("==> building mod")
+  subprocess.run(
+    ["npm", "run", "build"],
+    check=True,
+    shell=True,
+    stdout=subprocess.PIPE,
+  ).stdout
 
   print("==> collecting metadata")
 

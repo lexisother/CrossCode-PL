@@ -1,6 +1,3 @@
-/// <reference path="../global.d.ts" />
-
-if (!sc.pl) sc.pl = {};
 // Based on <https://github.com/CCDirectLink/crosscode-ru/blob/ab765a9a658a5e08bd9c522542980f9fde125ce7/src/locale.ts>
 
 const ORIGINAL_LOCALE = 'en_US';
