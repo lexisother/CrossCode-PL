@@ -51,15 +51,6 @@ def main() -> None:
     filename=f"ultimate-localized-ui-{ULTIMATE_UI_DOWNLOAD_VERSION[1]}.tgz",
   )
 
-
-  print("==> building mod")
-  subprocess.run(
-    ["npm", "run", "build"],
-    check=True,
-    shell=True,
-    stdout=subprocess.PIPE,
-  ).stdout
-
   print("==> collecting metadata")
 
   with open(PROJECT_DIR / "ccmod.json", "r") as manifest_file:
