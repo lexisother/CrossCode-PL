@@ -8,7 +8,6 @@
   },
   "homepage": "https://github.com/lexisother/CrossCode-PL",
   "postload": "out-dist/postload.js",
-  "prestart": "out-dist/prestart.js",
   "dependencies": {
     "crosscode": "~1.4.2",
     "localize-me": "^1.0.0",
