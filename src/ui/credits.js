@@ -93,19 +93,13 @@ ig.module('cc-pl.ui.credits').defines(() => {
     },
     createDLCList: function () {
       // TODO: CLEANUP
-      var extensions = [{ name: { pl_PL: 'Alyxia' }, description: { pl_PL: 'Developer, coding' } }],
+      var people = [{ name: 'Alyxia', description: 'Developer, coding' }],
         guiElement = new ig.GuiElementBase();
       guiElement.hook.size.x = 296;
       let content = 0;
-      const lang = ig.currentLang;
-      for (let extension of extensions) {
-        content = this.createHeaderEntry(
-          guiElement,
-          content,
-          extension.name[lang],
-          sc.FONT_COLORS.GREEN,
-        );
-        content = this.createTextEntry(guiElement, content, extension.description[lang], true);
+      for (let person of people) {
+        content = this.createHeaderEntry(guiElement, content, person.name, sc.FONT_COLORS.GREEN);
+        content = this.createTextEntry(guiElement, content, person.description, true);
       }
       guiElement.hook.size.y = content;
       this.scrollContainer.setElement(guiElement);
