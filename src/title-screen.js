@@ -7,6 +7,7 @@ ig.module('cc-pl.fixes.main-menu')
 
     sc.TitleScreenButtonGui.inject({
       plCreditsButton: null,
+      plCreditsGui: null,
       init() {
         this.parent();
         this.gameCodeButton.setWidth(sc.BUTTON_DEFAULT_WIDTH);
@@ -15,7 +16,7 @@ ig.module('cc-pl.fixes.main-menu')
         this.plCreditsButton.setAlign(ig.GUI_ALIGN.X_CENTER, ig.GUI_ALIGN.Y_BOTTOM);
         this.plCreditsButton.setPos(-20, this.gameCodeButton.hook.pos.y + 28);
         this.plCreditsButton.onButtonPress = function () {
-          console.log('hi!!!');
+          this.plCreditsGui.show();
         }.bind(this);
 
         this.plCreditsButton.hook.transitions = {
@@ -29,6 +30,8 @@ ig.module('cc-pl.fixes.main-menu')
         this.plCreditsButton.doStateTransition('HIDDEN', true);
         this.buttonGroup.addFocusGui(this.plCreditsButton, 1, 4);
         this.addChildGui(this.plCreditsButton);
+        this.plCreditsGui = new sc.PLGui();
+        this.addChildGui(this.plCreditsGui);
       },
       show() {
         this.parent();
