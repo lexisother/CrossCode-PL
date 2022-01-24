@@ -27,3 +27,6 @@ __pycache__/
 ##### NODE #####
 /node_modules/
 /out-dist/
+
+##### PERSONAL #####
+/notes.md
