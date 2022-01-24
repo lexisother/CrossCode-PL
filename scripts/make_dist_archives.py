@@ -22,7 +22,7 @@ MOD_FILES_PATTERNS = [
   "LICENSE*",
   "README*",
   "packs-mapping.json",
-  "out-dist/**/*.js",
+  "src/**/*.js",
   "packs/**/*.json",
   "assets/**/*.png",
 ]
