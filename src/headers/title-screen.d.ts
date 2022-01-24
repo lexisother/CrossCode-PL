@@ -1,4 +1,8 @@
 declare namespace sc {
+  interface ButtonGui {
+    setHeight: (height: number) => void;
+  }
+
   interface TitleScreenButtonGui {
     plCreditsButton: sc.ButtonGui;
 

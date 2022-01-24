@@ -12,24 +12,28 @@ ig.module('cc-pl.fixes.main-menu')
         this.parent();
         this.gameCodeButton.setWidth(sc.BUTTON_DEFAULT_WIDTH);
 
-        this.plCreditsButton = new sc.ButtonGui('Credits', sc.BUTTON_DEFAULT_WIDTH);
-        this.plCreditsButton.setAlign(ig.GUI_ALIGN.X_CENTER, ig.GUI_ALIGN.Y_BOTTOM);
-        this.plCreditsButton.setPos(-20, this.gameCodeButton.hook.pos.y + 28);
-        this.plCreditsButton.onButtonPress = function () {
-          this.plCreditsGui.show();
-        }.bind(this);
-
+        this.plCreditsButton = new sc.ButtonGui('PL Credits', null, true, sc.BUTTON_TYPE.EQUIP);
         this.plCreditsButton.hook.transitions = {
           DEFAULT: { state: {}, time: 0.2, timeFunction: KEY_SPLINES.EASE },
           HIDDEN: {
-            state: { offsetY: -40, alpha: 0 },
+            state: { offsetX: -(this.plCreditsButton.hook.size.x + 2) },
             time: 0.2,
             timeFunction: KEY_SPLINES.LINEAR,
           },
         };
-        this.plCreditsButton.doStateTransition('HIDDEN', true);
-        this.buttonGroup.addFocusGui(this.plCreditsButton, 1, 4);
+        this.plCreditsButton.setAlign(ig.GUI_ALIGN.X_LEFT, ig.GUI_ALIGN.Y_TOP);
+        this.plCreditsButton.setHeight(26);
+        this.plCreditsButton.textChild.setPos(0, -1);
+        this.plCreditsButton.setPos(2, 2);
+        this.plCreditsButton.doStateTransition('HIDDEN');
+        this.plCreditsButton.onButtonPress = () => {
+          this.plCreditsGui.show();
+        };
+        this.buttonGroup.addFocusGui(this.plCreditsButton, 15, 9);
         this.addChildGui(this.plCreditsButton);
+      },
+      postInit() {
+        this.parent();
         this.plCreditsGui = new sc.PLGui();
         this.addChildGui(this.plCreditsGui);
       },
