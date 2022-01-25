@@ -1,8 +1,23 @@
 /// <reference path="../../global.d.ts" />
 
 // TODO: REMOVE SINGLE-LETTER VARS
+// TODO: REMOVE UNUSED FUNCTIONS AND CLASS MEMBERS
 
 ig.module('cc-pl.ui.credits').defines(() => {
+  // Add our own loadable so we can load the credits
+  ig.PLCreditsLoadable = ig.JsonLoadable.extend({
+    cacheType: 'PLCreditsLoadable',
+    init() {
+      this.parent('data/credits-pl.json');
+    },
+    onload(a) {
+      this.data = a;
+    },
+    getJsonPath() {
+      return ig.root + this.path + ig.getCacheSuffix();
+    },
+  });
+
   sc.PLGui = ig.GuiElementBase.extend({
     transitions: {
       DEFAULT: {
@@ -31,6 +46,7 @@ ig.module('cc-pl.ui.credits').defines(() => {
     compileEntry: null,
     logs: [],
     currentIndex: null,
+    credits: new ig.PLCreditsLoadable(),
     init: function () {
       this.parent();
       this.hook.localAlpha = 0.8;
@@ -93,13 +109,18 @@ ig.module('cc-pl.ui.credits').defines(() => {
     },
     createDLCList: function () {
       // TODO: CLEANUP
-      var people = [{ name: 'Alyxia', description: 'Developer, coding' }],
+      var users = this.credits.data,
         guiElement = new ig.GuiElementBase();
       guiElement.hook.size.x = 296;
       let content = 0;
-      for (let person of people) {
-        content = this.createHeaderEntry(guiElement, content, person.name, sc.FONT_COLORS.GREEN);
-        content = this.createTextEntry(guiElement, content, person.description, true);
+      for (let user of Object.values(users)) {
+        content = this.createHeaderEntry(guiElement, content, user.full_name, sc.FONT_COLORS.GREEN);
+        content = this.createTextEntry(
+          guiElement,
+          content,
+          `${user.change_count} translations`,
+          true,
+        );
       }
       guiElement.hook.size.y = content;
       this.scrollContainer.setElement(guiElement);
