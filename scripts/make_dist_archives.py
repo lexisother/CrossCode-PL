@@ -25,6 +25,7 @@ MOD_FILES_PATTERNS = [
   "src/**/*.js",
   "packs/**/*.json",
   "assets/**/*.png",
+  "assets/**/*.json",
 ]
 
 LOCALIZE_ME_DOWNLOAD_COMMIT = "cd84932c815297c6777fafcf4e5fcfbc0d3d6cc3"

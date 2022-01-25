@@ -30,6 +30,8 @@ def http_request(
   print(f"fetching {url}")
   req = urllib.request.Request(url)
   req.add_header("Accept-Encoding", "gzip")
+  if os.getenv("WEBLATE_TOKEN"):
+    req.add_header("Authorization", f"Token {os.getenv('WEBLATE_TOKEN')}")
 
   res: object
   with urllib.request.urlopen(req, timeout=timeout) as res:

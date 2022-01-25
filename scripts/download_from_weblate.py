@@ -78,6 +78,26 @@ class WeblateApiComponentDownloader(ComponentDownloader):
       with open(DOWNLOADS_DIR / f"{component.id}.po", "wb") as output_file:
         shutil.copyfileobj(reader, output_file)
 
+  def fetch_contributors(self) -> None:
+    if not os.path.exists(PROJECT_DIR / "assets/data"):
+      os.mkdir(PROJECT_DIR / "assets/data")
+
+    file = {}
+    api_url = f"{self.HOST}/api/projects/crosscode/credits"
+    with internal_utils.http_request(api_url, timeout=NETWORK_TIMEOUT) as (_, reader):
+      api_response = json.load(reader)
+      for item in api_response:
+        if item["language"] != "Polish":
+          continue
+        for author in item["authors"]:
+          file[author["full_name"]] = {}
+          file[author["full_name"]]["full_name"] = author["full_name"]
+          file[author["full_name"]]["change_count"] = author["change_count"]
+
+    with open(PROJECT_DIR / "assets/data/credits-pl.json", "w+") as output_file:
+      json.dump(file, output_file)
+
+    print(f"downloaded stats")
 
 class NginxApiComponentDownloader(ComponentDownloader):
   HOST = "https://stronghold.crosscode.ru"
@@ -167,6 +187,12 @@ def main() -> None:
     for component in pool.imap_unordered(callback, components_to_fetch_list):
       print(f"downloaded {component.id}")
       downloads_state[component.id] = component
+
+
+  with ThreadPool(NETWORK_THREADS) as pool:
+    print(f"==> downloading contributor statistics from Weblate")
+
+    downloader.fetch_contributors()
 
   if not CROSSLOCALE_SCAN_FILE.exists():
     print(f"==> downloading the scan database for v{PROJECT_TARGET_GAME_VERSION}")
