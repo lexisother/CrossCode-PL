@@ -8,6 +8,9 @@ const TRANSLATION_LOCALE = 'pl_PL';
 const LOCALIZE_ME_PACKS_DIR = 'mod://CrossCode-PL/packs/';
 const LOCALIZE_ME_MAPPING_FILE = 'mod://CrossCode-PL/packs-mapping.json';
 
+const PATCHED_FONT_CHARACTERS = 'ĄĆĘŁŃÓŚŻŹąćęłńóśżź';
+const PATCHED_FONT_URLS = ['media/font/pl_PL/hall-fetica-bold.png'];
+
 const IGNORED_LABELS = new Set([
   '',
   'en_US',
@@ -47,5 +50,39 @@ localizeMe.add_locale(TRANSLATION_LOCALE, {
 
     // return `--${original}`; // debug mode
     return original;
+  },
+
+  pre_patch_font: async (context) => {
+    let url = PATCHED_FONT_URLS[context.size_index];
+    if (url != null) {
+      context.polishFont = await sc.ui2.waitForLoadable(new ig.Font(url, context.char_height));
+    }
+  },
+
+  patch_base_font: (canvas, context) => {
+    let { polishFont } = context;
+    if (polishFont != null) {
+      let ctx2d = canvas.getContext('2d');
+      for (let i = 0; i < PATCHED_FONT_CHARACTERS.length; i++) {
+        let char = PATCHED_FONT_CHARACTERS[i];
+        let width = polishFont.widthMap[i] + 1;
+        let rect = context.reserve_char(canvas, width);
+        context.set_char_pos(char, rect);
+        let srcX = polishFont.indicesX[i];
+        let srcY = polishFont.indicesY[i];
+        ctx2d.drawImage(
+          polishFont.data,
+          srcX,
+          srcY,
+          width,
+          polishFont.charHeight,
+          rect.x,
+          rect.y,
+          rect.width,
+          rect.height,
+        );
+      }
+    }
+    return canvas;
   },
 });

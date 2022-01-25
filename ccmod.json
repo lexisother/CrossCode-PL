@@ -14,5 +14,5 @@
     "localize-me": "^1.0.0",
     "ultimate-localized-ui": "^1.0.0"
   },
-  "assets": ["media/font/pl_PL/flag.png"]
+  "assets": ["media/font/pl_PL/flag.png", "media/font/pl_PL/hall-fetica-bold.png"]
 }
