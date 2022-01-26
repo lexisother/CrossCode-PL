@@ -109,11 +109,11 @@ ig.module('cc-pl.ui.credits').defines(() => {
     },
     createDLCList: function () {
       // TODO: CLEANUP
-      var users = this.credits.data,
+      var users = this.credits.data.people.sort((a, b) => a.change_count < b.change_count),
         guiElement = new ig.GuiElementBase();
       guiElement.hook.size.x = 296;
       let content = 0;
-      for (let user of Object.values(users)) {
+      for (let user of users) {
         content = this.createHeaderEntry(guiElement, content, user.full_name, sc.FONT_COLORS.GREEN);
         content = this.createTextEntry(
           guiElement,
