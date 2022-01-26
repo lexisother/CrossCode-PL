@@ -109,7 +109,7 @@ ig.module('cc-pl.ui.credits').defines(() => {
     },
     createDLCList: function () {
       // TODO: CLEANUP
-      var users = this.credits.data.people.sort((a, b) => a.change_count < b.change_count),
+      var users = this.credits.data.people.sort((a, b) => b.change_count - a.change_count),
         guiElement = new ig.GuiElementBase();
       guiElement.hook.size.x = 296;
       let content = 0;
