@@ -82,7 +82,7 @@ class WeblateApiComponentDownloader(ComponentDownloader):
     if not os.path.exists(PROJECT_DIR / "assets/data"):
       os.mkdir(PROJECT_DIR / "assets/data")
 
-    file = {}
+    file: dict[str, list[Any]] = {"people": []}
     api_url = f"{self.HOST}/api/projects/crosscode/credits"
     with internal_utils.http_request(api_url, timeout=NETWORK_TIMEOUT) as (_, reader):
       api_response = json.load(reader)
@@ -90,9 +90,10 @@ class WeblateApiComponentDownloader(ComponentDownloader):
         if item["language"] != "Polish":
           continue
         for author in item["authors"]:
-          file[author["full_name"]] = {}
-          file[author["full_name"]]["full_name"] = author["full_name"]
-          file[author["full_name"]]["change_count"] = author["change_count"]
+          file["people"].append({
+            "full_name": author["full_name"],
+            "change_count": author["change_count"]
+          })
 
     with open(PROJECT_DIR / "assets/data/credits-pl.json", "w+") as output_file:
       json.dump(file, output_file)
