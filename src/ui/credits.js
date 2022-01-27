@@ -79,7 +79,7 @@ ig.module('cc-pl.ui.credits').defines(() => {
     show: function () {
       ig.interact.addEntry(this.buttonInteract);
       ig.interact.setBlockDelay(0.2);
-      this.createDLCList();
+      this.createCreditsList();
       this.doStateTransition('DEFAULT');
     },
     hide: function () {
@@ -107,8 +107,7 @@ ig.module('cc-pl.ui.credits').defines(() => {
     onBackButtonCheck: function () {
       return sc.control.menuBack();
     },
-    createDLCList: function () {
-      // TODO: CLEANUP
+    createCreditsList: function () {
       var users = this.credits.data.people.sort((a, b) => b.change_count - a.change_count),
         guiElement = new ig.GuiElementBase();
       guiElement.hook.size.x = 296;
@@ -125,23 +124,23 @@ ig.module('cc-pl.ui.credits').defines(() => {
       guiElement.hook.size.y = content;
       this.scrollContainer.setElement(guiElement);
     },
-    createHeaderEntry: function (b, a, d, c, e) {
-      d = new sc.TextGui('\\c[' + c + ']' + d + '\\c[0]');
-      e && d.setAlign(ig.GUI_ALIGN.X_CENTER, ig.GUI_ALIGN.Y_TOP);
-      e = new ig.ColorGui('#7E7E7E', 296, 1);
-      d.setPos(2, a);
-      a = a + (d.hook.size.y + 2 - 2);
-      e.setPos(0, a);
-      a = a + 3;
-      b.addChildGui(d);
-      b.addChildGui(e);
-      return a;
+    createHeaderEntry: function (guiElement, yOffset, text, color, isCentered) {
+      text = new sc.TextGui('\\c[' + color + ']' + text + '\\c[0]');
+      if (isCentered) text.setAlign(ig.GUI_ALIGN.X_CENTER, ig.GUI_ALIGN.Y_TOP);
+      let colorGui = new ig.ColorGui('#7E7E7E', 296, 1);
+      text.setPos(2, yOffset);
+      yOffset = yOffset + (text.hook.size.y + 2 - 2);
+      colorGui.setPos(0, yOffset);
+      yOffset = yOffset + 3;
+      guiElement.addChildGui(text);
+      guiElement.addChildGui(colorGui);
+      return yOffset;
     },
-    createTextEntry: function (b, a, d) {
-      d = new sc.TextGui('\\c[0]' + d + '\\c[0]', { maxWidth: 280 });
-      d.setPos(15, a);
-      b.addChildGui(d);
-      return (a = a + d.hook.size.y);
+    createTextEntry: function (guiElement, yOffset, text) {
+      text = new sc.TextGui('\\c[0]' + text + '\\c[0]', { maxWidth: 280 });
+      text.setPos(15, yOffset);
+      guiElement.addChildGui(text);
+      return (yOffset = yOffset + text.hook.size.y);
     },
     createContent: function () {
       var b = 2;
@@ -156,6 +155,7 @@ ig.module('cc-pl.ui.credits').defines(() => {
       a.setPos(0, b);
       this.content.addChildGui(a);
       b = b + 1;
+      // Re-using extisting material because yes
       this.scrollContainer = new sc.DLCScrollContainer();
       this.scrollContainer.setPos(0, b);
       this.scrollContainer.setSize(301, 202);
