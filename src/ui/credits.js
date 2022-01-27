@@ -1,8 +1,5 @@
 /// <reference path="../../global.d.ts" />
 
-// TODO: REMOVE SINGLE-LETTER VARS
-// TODO: REMOVE UNUSED FUNCTIONS AND CLASS MEMBERS
-
 ig.module('cc-pl.ui.credits').defines(() => {
   // Add our own loadable so we can load the credits
   ig.PLCreditsLoadable = ig.JsonLoadable.extend({
@@ -34,18 +31,10 @@ ig.module('cc-pl.ui.credits').defines(() => {
     msgBox: null,
     content: null,
     back: null,
-    browseLeft: null,
-    browserRight: null,
     scrollContainer: null,
     header: null,
-    compiledButton: null,
     buttonInteract: null,
     buttonGroup: null,
-    compiledMode: false,
-    compileList: [],
-    compileEntry: null,
-    logs: [],
-    currentIndex: null,
     credits: new ig.PLCreditsLoadable(),
     init: function () {
       this.parent();
@@ -87,10 +76,6 @@ ig.module('cc-pl.ui.credits').defines(() => {
       ig.interact.setBlockDelay(0.2);
       this.doStateTransition('HIDDEN');
     },
-    clearLogs: function () {
-      this.compileEntry = null;
-      this.scrollContainer.clear();
-    },
     update: function () {
       if (!ig.interact.isBlocked()) {
         sc.control.menuScrollUp()
@@ -114,12 +99,7 @@ ig.module('cc-pl.ui.credits').defines(() => {
       let content = 0;
       for (let user of users) {
         content = this.createHeaderEntry(guiElement, content, user.full_name, sc.FONT_COLORS.GREEN);
-        content = this.createTextEntry(
-          guiElement,
-          content,
-          `${user.change_count} translations`,
-          true,
-        );
+        content = this.createTextEntry(guiElement, content, `${user.change_count} translations`);
       }
       guiElement.hook.size.y = content;
       this.scrollContainer.setElement(guiElement);
@@ -129,9 +109,9 @@ ig.module('cc-pl.ui.credits').defines(() => {
       if (isCentered) text.setAlign(ig.GUI_ALIGN.X_CENTER, ig.GUI_ALIGN.Y_TOP);
       let colorGui = new ig.ColorGui('#7E7E7E', 296, 1);
       text.setPos(2, yOffset);
-      yOffset = yOffset + (text.hook.size.y + 2 - 2);
+      yOffset += text.hook.size.y + 2 - 2;
       colorGui.setPos(0, yOffset);
-      yOffset = yOffset + 3;
+      yOffset += 3;
       guiElement.addChildGui(text);
       guiElement.addChildGui(colorGui);
       return yOffset;
@@ -140,30 +120,29 @@ ig.module('cc-pl.ui.credits').defines(() => {
       text = new sc.TextGui('\\c[0]' + text + '\\c[0]', { maxWidth: 280 });
       text.setPos(15, yOffset);
       guiElement.addChildGui(text);
-      return (yOffset = yOffset + text.hook.size.y);
+      return (yOffset += text.hook.size.y);
     },
     createContent: function () {
-      var b = 2;
-      this.logs = sc.version.changelog;
+      var scrollBar = new sc.LineGui(300),
+        yOffset = 2;
       this.header = new sc.TextGui('CrossCode-PL Credits');
       this.header.setAlign(ig.GUI_ALIGN.X_CENTER, ig.GUI_ALIGN.Y_TOP);
-      this.header.setPos(0, b);
+      this.header.setPos(0, yOffset);
       this.content.addChildGui(this.header);
-      var b = b + (this.header.hook.size.y + 2),
-        a = new sc.LineGui(300);
-      a.setAlign(ig.GUI_ALIGN.X_CENTER, ig.GUI_ALIGN.Y_TOP);
-      a.setPos(0, b);
-      this.content.addChildGui(a);
-      b = b + 1;
+      yOffset += this.header.hook.size.y + 2;
+      scrollBar.setAlign(ig.GUI_ALIGN.X_CENTER, ig.GUI_ALIGN.Y_TOP);
+      scrollBar.setPos(0, yOffset);
+      this.content.addChildGui(scrollBar);
+      yOffset++;
       // Re-using extisting material because yes
       this.scrollContainer = new sc.DLCScrollContainer();
-      this.scrollContainer.setPos(0, b);
+      this.scrollContainer.setPos(0, yOffset);
       this.scrollContainer.setSize(301, 202);
-      b = b + this.scrollContainer.hook.size.y;
-      a = new sc.LineGui(300);
-      a.setAlign(ig.GUI_ALIGN.X_CENTER, ig.GUI_ALIGN.Y_TOP);
-      a.setPos(0, b);
-      this.content.addChildGui(a);
+      yOffset += this.scrollContainer.hook.size.y;
+      scrollBar = new sc.LineGui(300);
+      scrollBar.setAlign(ig.GUI_ALIGN.X_CENTER, ig.GUI_ALIGN.Y_TOP);
+      scrollBar.setPos(0, yOffset);
+      this.content.addChildGui(scrollBar);
       this.content.addChildGui(this.scrollContainer);
     },
   });
