@@ -1,5 +1,9 @@
-declare namespace sc {
-  interface CCLoaderVersionGuiMixin {
-    crosscodePLItem: sc.TextGui;
+import 'ultimate-crosscode-typedefs/crosscode';
+
+declare global {
+  namespace sc {
+    interface TitleScreenGui {
+      crosscodePLItem: sc.TextGui;
+    }
   }
 }
