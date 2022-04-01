@@ -53,29 +53,32 @@ localizeMe.add_locale(TRANSLATION_LOCALE, {
   },
 
   pre_patch_font: async (context) => {
+    if (context.patchedFonts == null) context.patchedFonts = {};
     let url = PATCHED_FONT_URLS[context.size_index];
     if (url != null) {
-      context.polishFont = await sc.ui2.waitForLoadable(new ig.Font(url, context.char_height));
+      context.patchedFonts[TRANSLATION_LOCALE] = await sc.ui2.waitForLoadable(
+        new ig.Font(url, context.char_height),
+      );
     }
   },
 
   patch_base_font: (canvas, context) => {
-    let { polishFont } = context;
-    if (polishFont != null) {
+    let patchedFont = context.patchedFonts[TRANSLATION_LOCALE];
+    if (patchedFont != null) {
       let ctx2d = canvas.getContext('2d');
       for (let i = 0; i < PATCHED_FONT_CHARACTERS.length; i++) {
         let char = PATCHED_FONT_CHARACTERS[i];
-        let width = polishFont.widthMap[i] + 1;
+        let width = patchedFont.widthMap[i] + 1;
         let rect = context.reserve_char(canvas, width);
         context.set_char_pos(char, rect);
-        let srcX = polishFont.indicesX[i];
-        let srcY = polishFont.indicesY[i];
+        let srcX = patchedFont.indicesX[i];
+        let srcY = patchedFont.indicesY[i];
         ctx2d.drawImage(
-          polishFont.data,
+          patchedFont.data,
           srcX,
           srcY,
           width,
-          polishFont.charHeight,
+          patchedFont.charHeight,
           rect.x,
           rect.y,
           rect.width,
