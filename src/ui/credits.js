@@ -93,8 +93,9 @@ ig.module('cc-pl.ui.credits').defines(() => {
       return sc.control.menuBack();
     },
     createCreditsList: function () {
-      var users = this.credits.data.people.sort((a, b) => b.change_count - a.change_count),
-        guiElement = new ig.GuiElementBase();
+      let users = this.credits.data.slice();
+      users.sort((a, b) => b.change_count - a.change_count);
+      let guiElement = new ig.GuiElementBase();
       guiElement.hook.size.x = 296;
       let content = 0;
       for (let user of users) {
